@@ -25,6 +25,20 @@ function App(): JSX.Element {
     setText(e.target.value);
   }
 
+  function handleClick(key: number) {
+    return () => {
+      const copyList = [...list];
+      const checkedOrNot = !copyList[key].checked;
+
+      dispatch &&
+        dispatch({
+          type: "TOGGLE_MARK_TODO",
+          index: key,
+          isDone: checkedOrNot
+        });
+    };
+  }
+
   return (
     <main>
       <input
@@ -36,7 +50,7 @@ function App(): JSX.Element {
       />
       <ul>
         {list.map((item, i) => (
-          <li key={i.toString()}>
+          <li key={i.toString()} onClick={handleClick(i)}>
             {item.name}, is done? {JSON.stringify(item.checked)}
           </li>
         ))}

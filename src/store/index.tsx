@@ -9,13 +9,24 @@ const initialState: TypeValueContext = {
 
 function reducerFunc(
   state: TypeValueContext,
-  { type, ...actions }: ActionReducer
+  actions: ActionReducer
 ): TypeValueContext {
-  switch (type) {
+  switch (actions.type) {
     case "SET_TODO_LIST": {
       return {
         ...state,
         list: actions.list
+      };
+    }
+    case "TOGGLE_MARK_TODO": {
+      const copyList = [...state.list];
+      const { index, isDone } = actions;
+
+      copyList[index].checked = isDone;
+
+      return {
+        ...state,
+        list: copyList
       };
     }
     default:

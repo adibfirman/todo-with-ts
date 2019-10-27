@@ -1,8 +1,7 @@
-type ListType = Array<{ id: number, name: string, checked: boolean }>
+export type TypeList = Array<{ name: string; checked: boolean }>;
 
+export type ActionReducer = { type: "SET_TODO_LIST"; list: TypeList };
 export interface TypeValueContext {
-  list: ListType,
+  list: TypeList;
+  dispatch?({  }: ActionReducer): void;
 }
-
-export type ActionReducer =
-  | { type: 'SET_TODO_LIST', list: ListType }

@@ -1,36 +1,43 @@
-import React, { Provider } from 'react'
+import React from "react";
 
 import { TypeValueContext, ActionReducer } from "./index.d.js";
 
-const StoreReact = React.createContext({} as TypeValueContext) 
+const StoreReact = React.createContext({} as TypeValueContext);
 const initialState: TypeValueContext = {
-  list: [],
-}
+  list: [{ name: "Learning TypeScript", checked: true }]
+};
 
-function reducerFunc(state: TypeValueContext, { type, ...actions }: ActionReducer): TypeValueContext  {
+function reducerFunc(
+  state: TypeValueContext,
+  { type, ...actions }: ActionReducer
+): TypeValueContext {
   switch (type) {
-    case 'SET_TODO_LIST': {
+    case "SET_TODO_LIST": {
       return {
         ...state,
         list: actions.list
-      }
+      };
     }
     default:
-      return state
+      return state;
   }
 }
 
 function Provider({ children }: React.PropsWithChildren<{}>): JSX.Element {
-  const [state, dispatch] = React.useReducer(reducerFunc, initialState)
+  const [state, dispatch] = React.useReducer(reducerFunc, initialState);
 
-  return <StoreReact.Provider value={{ ...state, dispatch } as TypeValueContext}>{children}</StoreReact.Provider>
+  return (
+    <StoreReact.Provider value={{ ...state, dispatch }}>
+      {children}
+    </StoreReact.Provider>
+  );
 }
 
 function useStore(): TypeValueContext {
-  const store = React.useContext(StoreReact)
+  const store = React.useContext(StoreReact);
 
-  if (!store) throw new Error('Cannot using store in here')
-  return store
+  if (!store) throw new Error("Cannot using store in here");
+  return store;
 }
 
-export { Provider, useStore }
+export { Provider, useStore };

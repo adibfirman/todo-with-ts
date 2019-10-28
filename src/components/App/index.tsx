@@ -39,6 +39,10 @@ function App(): JSX.Element {
     };
   }
 
+  function handleRemoveAll() {
+    dispatch && dispatch({ type: "SET_TODO_LIST", list: [] });
+  }
+
   return (
     <main>
       <input
@@ -48,6 +52,7 @@ function App(): JSX.Element {
         type="text"
         name="text"
       />
+      <button onClick={handleRemoveAll}>remove all</button>
       <ul>
         {list.map((item, i) => (
           <li key={i.toString()} onClick={handleClick(i)}>
